@@ -1,0 +1,17 @@
+{
+  "name": "it-jobs",
+  "version": "1.0.0",
+  "description": "Alexa Skill that uses the Get On Board API to tell about remote IT jobs.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "alexa",
+    "alexa",
+    "skill",
+    "api"
+  ],
+  "author": "José Antonio Jaime Padilla",
+  "license": "ISC"
+}
