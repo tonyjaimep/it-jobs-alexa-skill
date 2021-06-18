@@ -13,5 +13,8 @@
     "api"
   ],
   "author": "José Antonio Jaime Padilla",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "ask-sdk-core": "^2.10.2"
+  }
 }
