@@ -58,7 +58,8 @@ const ErrorHandler = {
 		return true;
 	},
 	handle(handlerInput, error) {
-		const speechText = error.message;
+		console.error(error.message)
+		const speechText = "Sucedió un error. Puedes intentarlo de nuevo.";
 		return handlerInput.responseBuilder
 			.speak(speechText)
 			.reprompt(speechText)
@@ -115,7 +116,7 @@ const SearchJobsIntentHandler = {
 			attributesManager.setPersistentAttributes(attributes);
 			await attributesManager.savePersistentAttributes();
 
-			speechText = `Encontré ${results.length} resultado${results.length !== 1 && 's'} para tu búsqueda "${query}". ${results.length > 0 && "Pídeme detalles del siguiente trabajo para comenzar a verlos."}`
+			speechText = `Encontré ${results.length} resultado${results.length !== 1 && 's'} para tu búsqueda "${query}". ${results.length > 0 && "Pídeme detalles del siguiente trabajo para comenzar a escucharlos."}`
 		}
 
 		return handlerInput.responseBuilder
@@ -169,14 +170,11 @@ const JobDetailsIntentHandler = {
 };
 
 const JobInterestIntentHandler = {
-	async canHandle(handlerInput) {
-		const attributesManager = handlerInput.attributesManager;
-		const attributes = await attributesManager.getPersistentAttributes();
+	canHandle(handlerInput) {
 		return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-			&& Alexa.getIntentName(handlerInput.requestEnvelope) === 'JobInterestIntent'
-			&& attributes.hasOwnProperty('index');
+			&& Alexa.getIntentName(handlerInput.requestEnvelope) === 'JobInterestIntent';
 	},
-	async handler(handlerInput) {
+	async handle(handlerInput) {
 		const attributesManager = handlerInput.attributesManager;
 		const attributes = await attributesManager.getPersistentAttributes();
 
@@ -189,7 +187,7 @@ const JobInterestIntentHandler = {
 		}
 
 		const index = attributes.index;
-		const currentJob = attributes.results[index];
+		const currentJob = attributes.results[index - 1];
 		const speechText = `Para conocer más detalles del trabajo ${currentJob.attributes.title}, entra a getonbrd.com y busca la compañía ${currentJob.attributes.company.data.attributes.name}. ¡Suerte!`
 
 		return handlerInput.responseBuilder
